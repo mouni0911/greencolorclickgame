@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import GreencolorBox from "./components/GreencolorBox";
+import UserRegForm from "./components/UserRegForm";
 
 function App() {
+  const [gameLevel, setGameLevel] = useState("easy"); // Default game level
+
+  // Function to set the game level from Register component
+  const handleGameLevelChange = (level) => {
+    setGameLevel(level);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <UserRegForm
+              onGameLevelChange={handleGameLevelChange}
+              initialGameLevel={gameLevel}
+            />
+          }
+        />
+        <Route
+          path="/greencolorbox/:difficulty"
+          element={<GreencolorBox gameLevel={gameLevel} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
